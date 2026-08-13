@@ -2,10 +2,21 @@ COMPOSE := docker compose -f infra/compose.dev.yml --env-file infra/.env
 SITE    := erp.localhost
 BE      := $(COMPOSE) exec backend
 
-.PHONY: up down logs shell create-site install-apps migrate test backup restore-check
+.PHONY: up down logs shell configure create-site install-apps migrate test backup restore-check
 
-up:
-	$(COMPOSE) up -d
+up: ; $(COMPOSE) up -d
+	@$(MAKE) configure
+
+## Point bench at the containerised DB/Redis. Idempotent; required before new-site.
+## (frappe_docker normally does this via a `configurator` service; we inline it.)
+configure:
+	$(BE) bash -c '\
+		bench set-config -g db_host db && \
+		bench set-config -gp db_port 3306 && \
+		bench set-config -g redis_cache "redis://redis-cache:6379" && \
+		bench set-config -g redis_queue "redis://redis-queue:6379" && \
+		bench set-config -g redis_socketio "redis://redis-queue:6379" && \
+		bench set-config -gp socketio_port 9000'
 
 down:
 	$(COMPOSE) down
@@ -24,6 +35,11 @@ create-site:
 		--mariadb-user-host-login-scope=%
 	$(BE) bench --site $(SITE) install-app erpnext
 
+# ⚠️ KNOWN LIMITATION (Phase 0): apps fetched by `bench get-app` live inside the
+# container's /apps, which is NOT a volume — they vanish if the container is
+# recreated. Acceptable for dev. For production, bake all apps into a custom
+# image via frappe_docker's layered build (`apps.json` + `build/custom`).
+# Tracked as Phase 13.4 work.
 install-apps:
 	$(BE) bench get-app --branch version-16 hrms https://github.com/frappe/hrms
 	$(BE) bench get-app --branch version-16 india_compliance https://github.com/resilient-tech/india-compliance

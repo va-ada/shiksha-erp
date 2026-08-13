@@ -1,7 +1,7 @@
 {
  "doctype": "DocType",
  "name": "Curriculum Course",
- "module": "Shiksha Academics",
+ "module": "Academics",
  "istable": 1,
  "engine": "InnoDB",
  "field_order": ["semester", "course", "course_type", "lecture_hours", "tutorial_hours", "practical_hours", "credits"],

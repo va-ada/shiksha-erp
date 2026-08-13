@@ -1,7 +1,7 @@
 {
  "doctype": "DocType",
  "name": "Regulation",
- "module": "Shiksha Academics",
+ "module": "Academics",
  "custom": 0,
  "naming_rule": "By fieldname",
  "autoname": "field:regulation_code",

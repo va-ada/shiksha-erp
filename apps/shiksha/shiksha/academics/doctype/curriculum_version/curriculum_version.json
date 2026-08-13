@@ -1,7 +1,7 @@
 {
  "doctype": "DocType",
  "name": "Curriculum Version",
- "module": "Shiksha Academics",
+ "module": "Academics",
  "naming_rule": "Expression",
  "autoname": "format:{program}-{regulation}",
  "engine": "InnoDB",

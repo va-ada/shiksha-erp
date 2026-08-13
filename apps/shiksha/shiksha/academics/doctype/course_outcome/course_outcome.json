@@ -1,0 +1,26 @@
+{
+ "doctype": "DocType",
+ "name": "Course Outcome",
+ "module": "Academics",
+ "naming_rule": "Expression",
+ "autoname": "format:{course}-{outcome_code}",
+ "engine": "InnoDB",
+ "field_order": ["course", "outcome_code", "column_break_1", "regulation", "bloom_level", "description", "sec_map", "po_mapping"],
+ "fields": [
+  {"fieldname": "course", "fieldtype": "Link", "options": "Course", "label": "Course", "reqd": 1},
+  {"fieldname": "outcome_code", "fieldtype": "Data", "label": "Code (CO1)", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "regulation", "fieldtype": "Link", "options": "Regulation", "label": "Regulation", "reqd": 1},
+  {"fieldname": "bloom_level", "fieldtype": "Select", "label": "Bloom's Level",
+   "options": "Remember\nUnderstand\nApply\nAnalyse\nEvaluate\nCreate"},
+  {"fieldname": "description", "fieldtype": "Small Text", "label": "Statement", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "sec_map", "fieldtype": "Section Break", "label": "CO-PO Correlation"},
+  {"fieldname": "po_mapping", "fieldtype": "Table", "options": "CO PO Correlation", "label": "Mapped Outcomes"}
+ ],
+ "permissions": [
+  {"role": "Academics User", "read": 1},
+  {"role": "Education Manager", "read": 1, "write": 1, "create": 1},
+  {"role": "Instructor", "read": 1, "write": 1, "create": 1}
+ ],
+ "track_changes": 1
+}

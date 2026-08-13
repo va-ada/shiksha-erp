@@ -1,0 +1,13 @@
+{
+ "doctype": "DocType",
+ "name": "CO PO Correlation",
+ "module": "Academics",
+ "istable": 1,
+ "engine": "InnoDB",
+ "field_order": ["program_outcome", "correlation"],
+ "fields": [
+  {"fieldname": "program_outcome", "fieldtype": "Link", "options": "Program Outcome", "label": "Program Outcome", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "correlation", "fieldtype": "Select", "options": "1\n2\n3", "label": "Correlation (1=Low, 3=High)", "reqd": 1, "in_list_view": 1}
+ ],
+ "permissions": []
+}

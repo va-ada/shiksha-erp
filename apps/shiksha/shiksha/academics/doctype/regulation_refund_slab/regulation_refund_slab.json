@@ -1,7 +1,7 @@
 {
  "doctype": "DocType",
  "name": "Regulation Refund Slab",
- "module": "Shiksha Academics",
+ "module": "Academics",
  "istable": 1,
  "engine": "InnoDB",
  "field_order": ["upto_days_from_admission", "refund_pct", "description"],

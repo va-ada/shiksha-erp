@@ -27,6 +27,6 @@ scheduler_events = {
 }
 
 fixtures = [
-	{"dt": "Custom Field", "filters": [["module", "=", "Shiksha Academics"]]},
+	{"dt": "Custom Field", "filters": [["module", "=", "Academics"]]},
 	{"dt": "Workflow", "filters": [["name", "like", "Shiksha%"]]},
 ]
