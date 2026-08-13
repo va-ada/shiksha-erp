@@ -1,0 +1,26 @@
+{
+ "doctype": "DocType",
+ "name": "Curriculum Version",
+ "module": "Shiksha Academics",
+ "naming_rule": "Expression",
+ "autoname": "format:{program}-{regulation}",
+ "engine": "InnoDB",
+ "field_order": [
+  "program", "regulation", "column_break_1", "status", "total_credits",
+  "sec_courses", "courses"
+ ],
+ "fields": [
+  {"fieldname": "program", "fieldtype": "Link", "options": "Program", "label": "Program", "reqd": 1},
+  {"fieldname": "regulation", "fieldtype": "Link", "options": "Regulation", "label": "Regulation", "reqd": 1},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "status", "fieldtype": "Select", "options": "Draft\nActive\nSuperseded", "default": "Draft", "label": "Status"},
+  {"fieldname": "total_credits", "fieldtype": "Int", "label": "Total Credits", "read_only": 1},
+  {"fieldname": "sec_courses", "fieldtype": "Section Break", "label": "Semester-wise Courses"},
+  {"fieldname": "courses", "fieldtype": "Table", "options": "Curriculum Course", "label": "Courses", "reqd": 1}
+ ],
+ "permissions": [
+  {"role": "Academics User", "read": 1},
+  {"role": "Education Manager", "read": 1, "write": 1, "create": 1}
+ ],
+ "track_changes": 1
+}

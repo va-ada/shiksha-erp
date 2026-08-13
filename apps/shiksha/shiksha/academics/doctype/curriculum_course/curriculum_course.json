@@ -1,0 +1,19 @@
+{
+ "doctype": "DocType",
+ "name": "Curriculum Course",
+ "module": "Shiksha Academics",
+ "istable": 1,
+ "engine": "InnoDB",
+ "field_order": ["semester", "course", "course_type", "lecture_hours", "tutorial_hours", "practical_hours", "credits"],
+ "fields": [
+  {"fieldname": "semester", "fieldtype": "Int", "label": "Semester", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "course", "fieldtype": "Link", "options": "Course", "label": "Course", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "course_type", "fieldtype": "Select", "label": "Type", "in_list_view": 1,
+   "options": "Core\nElective\nOpen Elective\nMinor\nAudit\nMandatory Non-Credit"},
+  {"fieldname": "lecture_hours", "fieldtype": "Int", "label": "L", "default": 0},
+  {"fieldname": "tutorial_hours", "fieldtype": "Int", "label": "T", "default": 0},
+  {"fieldname": "practical_hours", "fieldtype": "Int", "label": "P", "default": 0},
+  {"fieldname": "credits", "fieldtype": "Float", "label": "Credits", "reqd": 1, "in_list_view": 1}
+ ],
+ "permissions": []
+}

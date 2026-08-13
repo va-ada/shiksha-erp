@@ -1,0 +1,51 @@
+{
+ "doctype": "DocType",
+ "name": "Regulation",
+ "module": "Shiksha Academics",
+ "custom": 0,
+ "naming_rule": "By fieldname",
+ "autoname": "field:regulation_code",
+ "engine": "InnoDB",
+ "field_order": [
+  "regulation_code", "regulation_title", "effective_from_year", "column_break_1",
+  "grading_scale", "status",
+  "sec_credits", "min_total_credits", "max_total_credits", "column_break_2",
+  "max_programme_duration_years",
+  "sec_attendance", "min_attendance_pct", "condonation_min_pct", "column_break_3",
+  "condonation_fee",
+  "sec_exam", "pass_mark_pct", "internal_weightage_pct", "column_break_4",
+  "max_backlogs_for_promotion", "double_valuation_variance_pct",
+  "sec_refund", "refund_slabs"
+ ],
+ "fields": [
+  {"fieldname": "regulation_code", "fieldtype": "Data", "label": "Regulation Code", "reqd": 1, "unique": 1},
+  {"fieldname": "regulation_title", "fieldtype": "Data", "label": "Title", "reqd": 1},
+  {"fieldname": "effective_from_year", "fieldtype": "Link", "options": "Academic Year", "label": "Effective From", "reqd": 1},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "grading_scale", "fieldtype": "Link", "options": "Grading Scale", "label": "Grading Scale"},
+  {"fieldname": "status", "fieldtype": "Select", "options": "Draft\nActive\nSuperseded", "default": "Draft", "label": "Status"},
+  {"fieldname": "sec_credits", "fieldtype": "Section Break", "label": "Credit Rules"},
+  {"fieldname": "min_total_credits", "fieldtype": "Int", "label": "Min Total Credits", "reqd": 1},
+  {"fieldname": "max_total_credits", "fieldtype": "Int", "label": "Max Total Credits"},
+  {"fieldname": "column_break_2", "fieldtype": "Column Break"},
+  {"fieldname": "max_programme_duration_years", "fieldtype": "Int", "label": "Max Programme Duration (years)", "reqd": 1},
+  {"fieldname": "sec_attendance", "fieldtype": "Section Break", "label": "Attendance Rules"},
+  {"fieldname": "min_attendance_pct", "fieldtype": "Float", "label": "Min Attendance %", "default": 75, "reqd": 1},
+  {"fieldname": "condonation_min_pct", "fieldtype": "Float", "label": "Condonation Floor %", "default": 65},
+  {"fieldname": "column_break_3", "fieldtype": "Column Break"},
+  {"fieldname": "condonation_fee", "fieldtype": "Currency", "label": "Condonation Fee"},
+  {"fieldname": "sec_exam", "fieldtype": "Section Break", "label": "Examination Rules"},
+  {"fieldname": "pass_mark_pct", "fieldtype": "Float", "label": "Pass Mark %", "default": 40, "reqd": 1},
+  {"fieldname": "internal_weightage_pct", "fieldtype": "Float", "label": "Internal Weightage %", "default": 40},
+  {"fieldname": "column_break_4", "fieldtype": "Column Break"},
+  {"fieldname": "max_backlogs_for_promotion", "fieldtype": "Int", "label": "Max Backlogs for Promotion", "default": 4},
+  {"fieldname": "double_valuation_variance_pct", "fieldtype": "Float", "label": "Double Valuation Variance Trigger %", "default": 15},
+  {"fieldname": "sec_refund", "fieldtype": "Section Break", "label": "Refund Slabs"},
+  {"fieldname": "refund_slabs", "fieldtype": "Table", "options": "Regulation Refund Slab", "label": "Refund Slabs"}
+ ],
+ "permissions": [
+  {"role": "Academics User", "read": 1},
+  {"role": "Education Manager", "read": 1, "write": 1, "create": 1}
+ ],
+ "track_changes": 1
+}

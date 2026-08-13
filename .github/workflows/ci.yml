@@ -1,0 +1,34 @@
+name: CI
+on:
+  push: {branches: [main]}
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.14"}
+      - run: pip install ruff
+      - run: ruff check apps/shiksha
+      - name: Validate DocType JSON
+        run: |
+          python - <<'EOF'
+          import json, pathlib, sys
+          bad = []
+          for p in pathlib.Path("apps/shiksha").rglob("*.json"):
+              try: json.load(open(p))
+              except Exception as e: bad.append(f"{p}: {e}")
+          if bad: print("\n".join(bad)); sys.exit(1)
+          print("all JSON valid")
+          EOF
+
+  # Full bench tests run in a container — heavier job, mirrors `make test`
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder until self-hosted runner with bench is provisioned
+        run: echo "bench run-tests executes locally via 'make test' (Phase 0.10 note)"

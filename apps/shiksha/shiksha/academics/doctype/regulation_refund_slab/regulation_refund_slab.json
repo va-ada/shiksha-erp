@@ -1,0 +1,14 @@
+{
+ "doctype": "DocType",
+ "name": "Regulation Refund Slab",
+ "module": "Shiksha Academics",
+ "istable": 1,
+ "engine": "InnoDB",
+ "field_order": ["upto_days_from_admission", "refund_pct", "description"],
+ "fields": [
+  {"fieldname": "upto_days_from_admission", "fieldtype": "Int", "label": "Up To Days From Admission", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "refund_pct", "fieldtype": "Float", "label": "Refund %", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "description", "fieldtype": "Data", "label": "Description", "in_list_view": 1}
+ ],
+ "permissions": []
+}

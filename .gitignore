@@ -1,0 +1,8 @@
+infra/.env
+infra/frappe_docker/
+*.pyc
+__pycache__/
+.DS_Store
+node_modules/
+*.log
+backups/
