@@ -41,14 +41,38 @@ create-site:
 # image via frappe_docker's layered build (`apps.json` + `build/custom`).
 # Tracked as Phase 13.4 work.
 install-apps:
-	$(BE) bench get-app --branch version-16 hrms https://github.com/frappe/hrms
-	$(BE) bench get-app --branch version-16 india_compliance https://github.com/resilient-tech/india-compliance
-	$(BE) bench get-app --branch version-16 education https://github.com/frappe/education
+	# shiksha is a volume mount, not a get-app clone — install it into the venv first,
+	# otherwise `bench build` dies on ModuleNotFoundError while building OTHER apps.
+	$(BE) bash -c "cd /home/frappe/frappe-bench && ./env/bin/pip install -q -e apps/shiksha"
+	-$(BE) bench get-app --branch version-16 hrms https://github.com/frappe/hrms
+	-$(BE) bench get-app --branch version-16 india_compliance https://github.com/resilient-tech/india-compliance
+	-$(BE) bench get-app --branch version-16 education https://github.com/frappe/education
+	# get-app's own pip step can silently no-op; ensure every app is importable
+	$(BE) bash -c 'cd /home/frappe/frappe-bench && for a in hrms india_compliance education shiksha; do \
+		./env/bin/python -c "import $$a" 2>/dev/null || ./env/bin/pip install -q -e apps/$$a; done'
 	$(BE) bench --site $(SITE) install-app hrms
 	$(BE) bench --site $(SITE) install-app india_compliance
 	$(BE) bench --site $(SITE) install-app education
-	$(BE) bench install-app shiksha || $(BE) bash -c "cd apps/shiksha && pip install -e ."
 	$(BE) bench --site $(SITE) install-app shiksha
+	@$(MAKE) restart
+
+## Workers hold a stale sys.path after new apps land (HTTP 500), and nginx holds a
+## stale upstream after the backend restarts (HTTP 502). Both must bounce, in order.
+restart:
+	$(COMPOSE) restart backend websocket scheduler queue-short queue-long
+	@sleep 15
+	$(COMPOSE) restart frontend
+	@sleep 8
+	@curl -s -o /dev/null -w "site: HTTP %{http_code}\n" -H "Host: $(SITE)" http://localhost:$${HTTP_PORT:-8080}/login
+
+## Checkpoint verification
+smoke:
+	$(BE) bench --site $(SITE) execute shiksha.academics.smoke.run
+
+pure-tests:
+	cd apps/shiksha && PYTHONPATH=. python3 -m pytest shiksha -q
+
+verify: pure-tests smoke
 
 migrate:
 	$(BE) bench --site $(SITE) migrate
